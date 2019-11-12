@@ -1,5 +1,5 @@
 import React from 'react';
-import Routes from './routes/Routes'
+import Routes from './routes/Routes';
 import './App.css';
 import { DateRangePicker } from 'react-dates';
 import FileUploader from './components/fileUploader';
@@ -26,7 +26,7 @@ class App extends React.Component {
         <Provider value={this.state}>
           {/* <TransactionTable />
           <FileUploader /> */}
-          <Routes/>
+          <Routes />
         </Provider>
       </div>
     );

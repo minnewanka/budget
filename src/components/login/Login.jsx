@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Container, Input, Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import { AUTH_TOKEN } from '../../utils/constants'
 import './style.css'
 import { Mutation } from 'react-apollo'
@@ -41,52 +42,56 @@ const Login = (props) => {
   }
 
   return (
-    <div >
-      <h4>{login ? 'Login' : 'Sign Up'}</h4>
-      <div className="login-fields">
-        {!login && (
-          <input
-            value={name}
-            onChange={e => setName(e.target.value)}
-            type="text"
-            placeholder="Your name"
-          />
-        )}
-        <input
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          type="text"
-          placeholder="Your email address"
-        />
-        <input
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          type="password"
-          placeholder="Choose a safe password"
-        />
-      </div>
-      <div>
-        <div className="flex mt3">
-          <Mutation
-            mutation={login ? LOGIN_MUTATION : SIGNUP_MUTATION}
-            variables={{ email, password, name }}
-            onCompleted={data => _confirm(data)}
-          >
-            {mutation => (
-              <div className="pointer mr2 button" onClick={mutation}>
-                {login ? 'login' : 'create account'}
-              </div>
+    <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+      <Grid.Column style={{ maxWidth: 450 }}>
+        <Header as='h2' color='blue' textAlign='center'>
+          {login ? 'Login' : 'Sign Up'}
+        </Header>
+        <Form size='large'>
+          <Segment stacked>
+            {!login && (
+              <Form.Input
+                fluid icon='user'
+                iconPosition='left'
+                value={name}
+                onChange={e => setName(e.target.value)}
+                type="text"
+                placeholder="Your name"
+              />
             )}
-          </Mutation>
-          <div
-            className="pointer button"
-            onClick={() => setLogin(!login)}
-          >
-            {login ? 'need to create an account?' : 'already have an account?'}
-          </div>
-        </div>
-      </div>
-    </div>
+            <Form.Input
+              fluid icon='mail'
+              iconPosition='left'
+              placeholder='Name'
+              onChange={e => setEmail(e.target.value)} />
+            <Form.Input
+              fluid
+              icon='lock'
+              iconPosition='left'
+              placeholder='Password'
+              type='password'
+              onChange={e => setPassword(e.target.value)}
+            />
+
+            <Mutation
+              mutation={login ? LOGIN_MUTATION : SIGNUP_MUTATION}
+              variables={{ email, password, name }}
+              onCompleted={data => _confirm(data)}
+            >
+              {mutation => (
+                <Button color='blue' fluid size='large' onClick={mutation}>
+                  {login ? 'login' : 'create account'}
+                </Button>
+              )}
+            </Mutation>
+
+          </Segment>
+        </Form>
+        <Message>
+          New to us? <a onClick={() => setLogin(!login)}>  {login ? 'Sign Up' : 'already have an account?'}</a>
+        </Message>
+      </Grid.Column>
+    </Grid>
   )
 }
 

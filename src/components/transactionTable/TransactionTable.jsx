@@ -15,7 +15,7 @@ const TRANSACTION_QUERY = gql`
     }
   }`
 
-const TransactionTable = ({  }) => {
+const TransactionTable = ({ }) => {
   const columns = [
     {
       id: 'date',
@@ -36,17 +36,17 @@ const TransactionTable = ({  }) => {
     },
   ];
 
-return(
-  <Query query={TRANSACTION_QUERY}>
-        {({ loading, error, data }) => {
-          if (loading) return <div>Fetching</div>
-          if (error) return <div>Error</div>
-    
-          const transactions = data.transactions
-    
-          return <ReactTable data={transactions} columns={columns} />;
-        }}
-   </Query>)
+  return (
+    <Query query={TRANSACTION_QUERY}>
+      {({ loading, error, data }) => {
+        if (loading) return <div>Fetching</div>
+        if (error) return <div>Error</div>
+
+        const transactions = data.transactions
+
+        return <ReactTable data={transactions} columns={columns} />;
+      }}
+    </Query>)
 };
 
 export default TransactionTable;
