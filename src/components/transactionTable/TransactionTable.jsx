@@ -3,11 +3,22 @@ import React, { useState } from 'react';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import Moment from 'moment';
+import { Query } from 'react-apollo'
+import gql from 'graphql-tag'
 
-const TransactionTable = ({ data }) => {
+const TRANSACTION_QUERY = gql`
+  {
+    transactions {
+      title
+      amount
+      date
+    }
+  }`
+
+const TransactionTable = ({  }) => {
   const columns = [
     {
-      id: 'updatedAt',
+      id: 'date',
       Header: 'Date',
       accessor: d => {
         return Moment(d.date)
@@ -25,7 +36,17 @@ const TransactionTable = ({ data }) => {
     },
   ];
 
-  return <ReactTable data={data} columns={columns} />;
+return(
+  <Query query={TRANSACTION_QUERY}>
+        {({ loading, error, data }) => {
+          if (loading) return <div>Fetching</div>
+          if (error) return <div>Error</div>
+    
+          const transactions = data.transactions
+    
+          return <ReactTable data={transactions} columns={columns} />;
+        }}
+   </Query>)
 };
 
 export default TransactionTable;

@@ -10,7 +10,6 @@ class App extends React.Component {
     super(props);
     this.state = {
       data: [],
-      startDate,
       loadData: this.loadData.bind(this),
     };
   }
@@ -23,7 +22,6 @@ class App extends React.Component {
     return (
       <div className="App">
         <Provider value={this.state}>
-          <DateRangePicker startDate={startDate} endDate={endDate} />
           <TransactionTable />
           <FileUploader />
         </Provider>
