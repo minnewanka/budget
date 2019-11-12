@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
 const FileUploader = ({ loadData }) => {
   let fileReader;
 
   const handleFileRead = e => {
     const content = fileReader.result;
-    var firstLine = content.split('\n').shift();
-    const transactions = content.substring(content.indexOf('\n') + 1);
+    var firstLine = content.split("\n").shift();
+    const transactions = content.substring(content.indexOf("\n") + 1);
     const allLines = transactions.split(/\r\n|\n/);
 
     var data = [];

@@ -1,10 +1,5 @@
-import React from 'react'
+import React from "react";
 
-const defaultValue = {
+const defaultValue = {};
 
-}
-
-export const {
-  Provider,
-  Consumer
-} = React.createContext(defaultValue)
+export const { Provider, Consumer } = React.createContext(defaultValue);

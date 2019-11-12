@@ -1,12 +1,12 @@
-import React from 'react'
+import React from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Redirect,
   Route
-} from 'react-router-dom'
-import Login from '../components/login'
-import TransactionTable from '../components/transactionTable'
+} from "react-router-dom";
+import Login from "../components/login";
+import TransactionTable from "../components/transactionTable";
 
 const Routes = () => {
   return (
@@ -17,7 +17,7 @@ const Routes = () => {
         <Route exact path="/transactions" component={TransactionTable} />
       </Switch>
     </Router>
-  )
-}
+  );
+};
 
-export default Routes
+export default Routes;

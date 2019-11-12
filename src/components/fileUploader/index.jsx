@@ -1,6 +1,6 @@
-import React from 'react';
-import { Consumer } from '../../context';
-import FileUploader from './FileUploader';
+import React from "react";
+import { Consumer } from "../../context";
+import FileUploader from "./FileUploader";
 
 const FileUploaderConsumer = () => {
   return (
