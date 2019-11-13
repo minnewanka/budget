@@ -7,14 +7,42 @@ import { Query, Mutation, useMutation } from "react-apollo";
 import TransactionForm from "../transactionForm";
 import {
   GET_TRANSACTIONS_QUERY,
-  DELETE_TRANSACTION
+  DELETE_TRANSACTION,
+  UPDATE_TRANSACTION
 } from "../../queries/transactionsQuery";
 
 const TransactionTable = ({ data }) => {
   const [deleteTransaction] = useMutation(DELETE_TRANSACTION, {
     refetchQueries: [{ query: GET_TRANSACTIONS_QUERY }]
   });
+  const [updateTransaction] = useMutation(UPDATE_TRANSACTION, {
+    refetchQueries: [{ query: GET_TRANSACTIONS_QUERY }]
+  });
 
+  const renderEditable = cellInfo => {
+    return (
+      <div
+        style={{ backgroundColor: "#fafafa" }}
+        contentEditable
+        suppressContentEditableWarning
+        onBlur={e => {
+          data[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
+          const transactionToUpate = data[cellInfo.index];
+          updateTransaction({
+            variables: {
+              id: transactionToUpate.id,
+              title: transactionToUpate.title,
+              date: transactionToUpate.date,
+              amount: parseFloat(transactionToUpate.amount)
+            }
+          });
+        }}
+        dangerouslySetInnerHTML={{
+          __html: data[cellInfo.index][cellInfo.column.id]
+        }}
+      />
+    );
+  };
   const columns = [
     {
       id: "date",
@@ -27,11 +55,13 @@ const TransactionTable = ({ data }) => {
     },
     {
       Header: "Libelle",
-      accessor: "title"
+      accessor: "title",
+      Cell: renderEditable
     },
     {
       Header: "Amount",
-      accessor: "amount"
+      accessor: "amount",
+      Cell: renderEditable
     },
     {
       Header: "",
