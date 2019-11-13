@@ -6,16 +6,7 @@ import Moment from "moment";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import TransactionForm from "../transactionForm";
-
-const TRANSACTION_QUERY = gql`
-  {
-    transactions {
-      title
-      amount
-      date
-    }
-  }
-`;
+import { GET_TRANSACTIONS_QUERY } from "../../queries/transactionsQuery";
 
 const TransactionTable = ({}) => {
   const columns = [
@@ -39,7 +30,7 @@ const TransactionTable = ({}) => {
   ];
 
   return (
-    <Query query={TRANSACTION_QUERY}>
+    <Query query={GET_TRANSACTIONS_QUERY}>
       {({ loading, error, data }) => {
         if (loading) return <div>Fetching</div>;
         if (error) return <div>Error</div>;
