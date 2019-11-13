@@ -5,6 +5,7 @@ import "react-table/react-table.css";
 import Moment from "moment";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
+import TransactionForm from "../transactionForm";
 
 const TRANSACTION_QUERY = gql`
   {
@@ -45,7 +46,12 @@ const TransactionTable = ({}) => {
 
         const transactions = data.transactions;
 
-        return <ReactTable data={transactions} columns={columns} />;
+        return (
+          <div>
+            <TransactionForm />
+            <ReactTable data={transactions} columns={columns} />
+          </div>
+        );
       }}
     </Query>
   );
