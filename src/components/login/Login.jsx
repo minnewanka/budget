@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import {
-  Container,
-  Input,
   Button,
   Form,
   Grid,
   Header,
-  Image,
   Message,
   Segment
 } from "semantic-ui-react";
@@ -101,10 +98,18 @@ const Login = props => {
         </Form>
         <Message>
           New to us?{" "}
-          <a onClick={() => setLogin(!login)}>
-            {" "}
+          <span
+            style={{
+              cursor: "pointer",
+              color: "blue",
+              textDecoration: "underline"
+            }}
+            onClick={() => {
+              setLogin(!login);
+            }}
+          >
             {login ? "Sign Up" : "already have an account?"}
-          </a>
+          </span>
         </Message>
       </Grid.Column>
     </Grid>

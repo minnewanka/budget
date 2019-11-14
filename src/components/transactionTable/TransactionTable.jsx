@@ -1,10 +1,8 @@
-import React, { useState } from "react";
-
+import React from "react";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import Moment from "moment";
-import { Query, Mutation, useMutation } from "react-apollo";
-import TransactionForm from "../transactionForm";
+import { useMutation } from "react-apollo";
 import {
   GET_TRANSACTIONS_QUERY,
   DELETE_TRANSACTION,
@@ -88,7 +86,12 @@ const TransactionTable = ({ data }) => {
 
   return (
     <div>
-      <ReactTable data={data} columns={columns} />
+      <ReactTable
+        data={data}
+        defaultPageSize={10}
+        showPagination={false}
+        columns={columns}
+      />
     </div>
   );
 };

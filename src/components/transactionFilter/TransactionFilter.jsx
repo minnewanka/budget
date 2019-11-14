@@ -10,15 +10,24 @@ import {
 } from "../../queries/transactionsQuery";
 import { DATE_FORMAT_DD_MM_YYYY } from "../../utils/constants";
 
-const TransactionForm = () => {
+const TransactionFilter = () => {
   const [date, setDate] = useState(null);
   const [title, setTitle] = useState("");
-  const [amount, setAmount] = useState(0);
+  const [amount] = useState(0);
   return (
     <Segment>
       <Form>
         <Form.Group>
-          <Form.Field>
+          <Form.Field width={4}>
+            <DayPickerInput
+              format={DATE_FORMAT_DD_MM_YYYY}
+              placeholder={DATE_FORMAT_DD_MM_YYYY}
+              formatDate={formatDate}
+              parseDate={parseDate}
+              onDayChange={date => setDate(date)}
+            />
+          </Form.Field>
+          <Form.Field width={4}>
             <DayPickerInput
               format={DATE_FORMAT_DD_MM_YYYY}
               placeholder={DATE_FORMAT_DD_MM_YYYY}
@@ -28,14 +37,9 @@ const TransactionForm = () => {
             />
           </Form.Field>
           <Form.Input
-            width={7}
+            width={6}
             placeholder="Description"
             onChange={e => setTitle(e.target.value)}
-          />
-          <Form.Input
-            type="number"
-            placeholder="Amount"
-            onChange={e => setAmount(parseFloat(e.target.value))}
           />
           <Mutation
             mutation={POST_TRANSACTION}
@@ -44,7 +48,7 @@ const TransactionForm = () => {
           >
             {postMutation => (
               <Form.Button color="blue" onClick={postMutation}>
-                {"create transaction"}
+                Filter
               </Form.Button>
             )}
           </Mutation>
@@ -54,4 +58,4 @@ const TransactionForm = () => {
   );
 };
 
-export default TransactionForm;
+export default TransactionFilter;

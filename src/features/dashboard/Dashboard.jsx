@@ -1,8 +1,10 @@
 import React from "react";
 import { GET_TRANSACTIONS_QUERY } from "../../queries/transactionsQuery";
+import { Container } from "semantic-ui-react";
 import TransactionForm from "../../components/transactionForm";
 import TransactionTable from "../../components/transactionTable/TransactionTable";
 import { Query } from "react-apollo";
+import TransactionFilter from "../../components/transactionFilter/TransactionFilter";
 
 const Dashboard = () => {
   return (
@@ -14,10 +16,11 @@ const Dashboard = () => {
         const transactions = data.transactions;
 
         return (
-          <div>
-            <TransactionForm />
+          <Container>
+            <TransactionFilter />
             <TransactionTable data={transactions} />
-          </div>
+            <TransactionForm />
+          </Container>
         );
       }}
     </Query>
