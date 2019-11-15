@@ -8,7 +8,8 @@ import TransactionFilter from "../../components/transactionFilter/TransactionFil
 import { getFirstDayOfMonth, getLastDayOfMonth } from "../../utils/utils";
 import {
   NEW_TRANSACTION_SUBSCRIPTION,
-  DELETED_TRANSACTION_SUBSCRIPTION
+  DELETED_TRANSACTION_SUBSCRIPTION,
+  UPDATED_TRANSACTION_SUBSCRIPTION
 } from "../../queries/transactionSubscription";
 
 const Dashboard = () => {
@@ -51,6 +52,26 @@ const Dashboard = () => {
     });
   };
 
+  const subscribeUpdatedTransaction = async subscribeToMore => {
+    subscribeToMore({
+      document: UPDATED_TRANSACTION_SUBSCRIPTION,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
+        const updatedTransaction = subscriptionData.data.updatedTransaction;
+        // console.log("updatedTransaction", updatedTransaction);
+        const previousTransactions = prev.transactions;
+        const index = previousTransactions.findIndex(
+          transaction => transaction.id === updatedTransaction.id
+        );
+        previousTransactions[index] = updatedTransaction;
+        return Object.assign({}, prev, {
+          transactions: [...previousTransactions],
+          __typename: prev.transactions__typename
+        });
+      }
+    });
+  };
+
   return (
     <Query
       query={GET_TRANSACTIONS_QUERY}
@@ -75,6 +96,9 @@ const Dashboard = () => {
               }
               subscribeToDeletedTransaction={() =>
                 subscribeToDeletedTransaction(subscribeToMore)
+              }
+              subscribeUpdatedTransaction={() =>
+                subscribeUpdatedTransaction(subscribeToMore)
               }
             />
             <TransactionForm />

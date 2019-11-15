@@ -8,10 +8,22 @@ import {
   UPDATE_TRANSACTION
 } from "../../queries/transactionsQuery";
 
+const getTrProps = (state, rowInfo, instance) => {
+  if (rowInfo) {
+    return {
+      style: {
+        background: rowInfo.row.proceeded ? "#e6ffee" : "#ffe6e6"
+      }
+    };
+  }
+  return {};
+};
+
 const TransactionTable = ({
   data,
   subscribeToNewTransaction,
-  subscribeToDeletedTransaction
+  subscribeToDeletedTransaction,
+  subscribeUpdatedTransaction
 }) => {
   const [deleteTransaction] = useMutation(DELETE_TRANSACTION);
   const [updateTransaction] = useMutation(UPDATE_TRANSACTION);
@@ -19,12 +31,12 @@ const TransactionTable = ({
   useEffect(() => {
     subscribeToNewTransaction();
     subscribeToDeletedTransaction();
+    subscribeUpdatedTransaction();
   }, []);
 
   const renderEditable = cellInfo => {
     return (
       <div
-        style={{ backgroundColor: "#fafafa" }}
         contentEditable
         suppressContentEditableWarning
         onBlur={e => {
@@ -35,7 +47,8 @@ const TransactionTable = ({
               id: transactionToUpate.id,
               title: transactionToUpate.title,
               date: transactionToUpate.date,
-              amount: parseFloat(transactionToUpate.amount)
+              amount: parseFloat(transactionToUpate.amount),
+              proceeded: transactionToUpate.proceeded
             }
           });
         }}
@@ -85,12 +98,45 @@ const TransactionTable = ({
           Delete
         </span>
       )
+    },
+    {
+      Header: "",
+      id: "proceeded",
+      accessor: "proceeded",
+      Cell: row => (
+        <span
+          style={{
+            cursor: "pointer",
+            color: "blue",
+            textDecoration: "underline"
+          }}
+          onClick={() => {
+            const transaction = data[row.index];
+            updateTransaction({
+              variables: {
+                id: transaction.id,
+                title: transaction.title,
+                date: transaction.date,
+                amount: parseFloat(transaction.amount),
+                proceeded: !transaction.proceeded
+              }
+            });
+          }}
+        >
+          {data[row.index].proceeded ? "Unselect" : "Select"}
+        </span>
+      )
     }
   ];
 
   return (
     <div>
-      <ReactTable data={data} defaultPageSize={10} columns={columns} />
+      <ReactTable
+        data={data}
+        defaultPageSize={10}
+        columns={columns}
+        getTrProps={getTrProps}
+      />
     </div>
   );
 };

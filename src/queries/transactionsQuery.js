@@ -7,6 +7,7 @@ export const GET_TRANSACTIONS_QUERY = gql`
       title
       amount
       date
+      proceeded
     }
   }
 `;
@@ -25,10 +26,16 @@ export const UPDATE_TRANSACTION = gql`
     $title: String!
     $amount: Float!
     $date: String!
+    $proceeded: Boolean!
   ) {
     updateTransaction(
       id: $id
-      data: { title: $title, date: $date, amount: $amount }
+      data: {
+        title: $title
+        date: $date
+        amount: $amount
+        proceeded: $proceeded
+      }
     ) {
       id
     }

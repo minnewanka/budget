@@ -7,6 +7,7 @@ export const NEW_TRANSACTION_SUBSCRIPTION = gql`
       title
       amount
       date
+      proceeded
     }
   }
 `;
@@ -15,6 +16,17 @@ export const DELETED_TRANSACTION_SUBSCRIPTION = gql`
   subscription {
     deletedTransaction {
       id
+    }
+  }
+`;
+export const UPDATED_TRANSACTION_SUBSCRIPTION = gql`
+  subscription {
+    updatedTransaction {
+      id
+      title
+      amount
+      date
+      proceeded
     }
   }
 `;

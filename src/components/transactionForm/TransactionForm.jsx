@@ -14,7 +14,13 @@ import { getFirstDayOfMonth, getLastDayOfMonth } from "../../utils/utils";
 const TransactionForm = () => {
   const [date, setDate] = useState(new Date());
   const [title, setTitle] = useState("");
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState("");
+
+  const onsubmit = postMutation => {
+    setTitle("");
+    setAmount("");
+    postMutation();
+  };
   return (
     <Segment>
       <Form>
@@ -30,11 +36,13 @@ const TransactionForm = () => {
             />
           </Form.Field>
           <Form.Input
+            value={title}
             width={7}
             placeholder="Description"
             onChange={e => setTitle(e.target.value)}
           />
           <Form.Input
+            value={amount}
             type="number"
             placeholder="Amount"
             onChange={e => setAmount(parseFloat(e.target.value))}
@@ -44,7 +52,7 @@ const TransactionForm = () => {
             variables={{ title, date, amount }}
           >
             {postMutation => (
-              <Form.Button color="blue" onClick={postMutation}>
+              <Form.Button color="blue" onClick={() => onsubmit(postMutation)}>
                 {"create transaction"}
               </Form.Button>
             )}
