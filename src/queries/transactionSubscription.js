@@ -10,3 +10,11 @@ export const NEW_TRANSACTION_SUBSCRIPTION = gql`
     }
   }
 `;
+
+export const DELETED_TRANSACTION_SUBSCRIPTION = gql`
+  subscription {
+    deletedTransaction {
+      id
+    }
+  }
+`;

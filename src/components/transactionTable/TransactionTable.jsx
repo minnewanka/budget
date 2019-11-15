@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import Moment from "moment";
@@ -8,9 +8,18 @@ import {
   UPDATE_TRANSACTION
 } from "../../queries/transactionsQuery";
 
-const TransactionTable = ({ data }) => {
+const TransactionTable = ({
+  data,
+  subscribeToNewTransaction,
+  subscribeToDeletedTransaction
+}) => {
   const [deleteTransaction] = useMutation(DELETE_TRANSACTION);
   const [updateTransaction] = useMutation(UPDATE_TRANSACTION);
+
+  useEffect(() => {
+    subscribeToNewTransaction();
+    subscribeToDeletedTransaction();
+  }, []);
 
   const renderEditable = cellInfo => {
     return (

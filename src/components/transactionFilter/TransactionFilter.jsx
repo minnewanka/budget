@@ -21,7 +21,6 @@ const TransactionFilter = ({ setFilter, setBegin, setEnd }) => {
   };
 
   const clear = () => {
-    console.log("test");
     setTitle("");
     setStartDate(firstDay);
     setEndDate(lastDay);
