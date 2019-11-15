@@ -4,18 +4,13 @@ import "react-table/react-table.css";
 import Moment from "moment";
 import { useMutation } from "react-apollo";
 import {
-  GET_TRANSACTIONS_QUERY,
   DELETE_TRANSACTION,
   UPDATE_TRANSACTION
 } from "../../queries/transactionsQuery";
 
 const TransactionTable = ({ data }) => {
-  const [deleteTransaction] = useMutation(DELETE_TRANSACTION, {
-    refetchQueries: [{ query: GET_TRANSACTIONS_QUERY }]
-  });
-  const [updateTransaction] = useMutation(UPDATE_TRANSACTION, {
-    refetchQueries: [{ query: GET_TRANSACTIONS_QUERY }]
-  });
+  const [deleteTransaction] = useMutation(DELETE_TRANSACTION);
+  const [updateTransaction] = useMutation(UPDATE_TRANSACTION);
 
   const renderEditable = cellInfo => {
     return (
@@ -86,12 +81,7 @@ const TransactionTable = ({ data }) => {
 
   return (
     <div>
-      <ReactTable
-        data={data}
-        defaultPageSize={10}
-        showPagination={false}
-        columns={columns}
-      />
+      <ReactTable data={data} defaultPageSize={10} columns={columns} />
     </div>
   );
 };

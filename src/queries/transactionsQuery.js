@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const GET_TRANSACTIONS_QUERY = gql`
-  {
-    transactions {
+  query GetTransactions($filter: String, $begin: String, $end: String) {
+    transactions(filter: $filter, begin: $begin, end: $end) {
       id
       title
       amount

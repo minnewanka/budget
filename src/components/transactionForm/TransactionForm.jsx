@@ -9,9 +9,10 @@ import {
   POST_TRANSACTION
 } from "../../queries/transactionsQuery";
 import { DATE_FORMAT_DD_MM_YYYY } from "../../utils/constants";
+import { getFirstDayOfMonth, getLastDayOfMonth } from "../../utils/utils";
 
 const TransactionForm = () => {
-  const [date, setDate] = useState(null);
+  const [date, setDate] = useState(new Date());
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState(0);
   return (
@@ -20,6 +21,7 @@ const TransactionForm = () => {
         <Form.Group>
           <Form.Field>
             <DayPickerInput
+              value={date}
               format={DATE_FORMAT_DD_MM_YYYY}
               placeholder={DATE_FORMAT_DD_MM_YYYY}
               formatDate={formatDate}
@@ -40,7 +42,6 @@ const TransactionForm = () => {
           <Mutation
             mutation={POST_TRANSACTION}
             variables={{ title, date, amount }}
-            refetchQueries={[{ query: GET_TRANSACTIONS_QUERY }]}
           >
             {postMutation => (
               <Form.Button color="blue" onClick={postMutation}>
