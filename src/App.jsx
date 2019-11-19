@@ -2,18 +2,19 @@ import React from "react";
 import Routes from "./routes/Routes";
 import "./App.css";
 import { Provider } from "./context";
+import { MENU } from "./utils/constants";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
-      loadData: this.loadData.bind(this)
+      activeItem: MENU.DASHBOARD,
+      setActiveItem: this.setActiveItem.bind(this)
     };
   }
 
-  loadData(data) {
-    this.setState({ data: data });
+  setActiveItem(item) {
+    this.setState({ activeItem: item });
   }
 
   render() {
