@@ -7,6 +7,7 @@ import {
   DELETE_TRANSACTION,
   UPDATE_TRANSACTION
 } from "../../queries/transactionsQuery";
+import { Icon } from "semantic-ui-react";
 
 const getTrProps = (state, rowInfo, instance) => {
   if (rowInfo) {
@@ -78,53 +79,49 @@ const TransactionTable = ({
       accessor: "amount",
       Cell: renderEditable
     },
-    {
-      Header: "",
-      id: "delete",
-      accessor: str => "delete",
 
-      Cell: row => (
-        <span
-          style={{
-            cursor: "pointer",
-            color: "blue",
-            textDecoration: "underline"
-          }}
-          onClick={() => {
-            const transactionToDelete = data[row.index];
-            deleteTransaction({ variables: { id: transactionToDelete.id } });
-          }}
-        >
-          Delete
-        </span>
-      )
-    },
     {
       Header: "",
       id: "proceeded",
       accessor: "proceeded",
+      width: 50,
+      Cell: row => {
+        const transaction = data[row.index];
+        return (
+          <Icon
+            link
+            color={transaction.proceeded ? "green" : "red"}
+            name={transaction.proceeded ? "check circle" : "circle outilne"}
+            onClick={() => {
+              updateTransaction({
+                variables: {
+                  id: transaction.id,
+                  title: transaction.title,
+                  date: transaction.date,
+                  amount: parseFloat(transaction.amount),
+                  proceeded: !transaction.proceeded
+                }
+              });
+            }}
+          />
+        );
+      }
+    },
+    {
+      Header: "",
+      id: "delete",
+      accessor: str => "delete",
+      width: 50,
       Cell: row => (
-        <span
-          style={{
-            cursor: "pointer",
-            color: "blue",
-            textDecoration: "underline"
-          }}
+        <Icon
+          link
+          color="red"
+          name="delete"
           onClick={() => {
-            const transaction = data[row.index];
-            updateTransaction({
-              variables: {
-                id: transaction.id,
-                title: transaction.title,
-                date: transaction.date,
-                amount: parseFloat(transaction.amount),
-                proceeded: !transaction.proceeded
-              }
-            });
+            const transactionToDelete = data[row.index];
+            deleteTransaction({ variables: { id: transactionToDelete.id } });
           }}
-        >
-          {data[row.index].proceeded ? "Unselect" : "Select"}
-        </span>
+        />
       )
     }
   ];
