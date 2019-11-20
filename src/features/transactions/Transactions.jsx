@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { GET_TRANSACTIONS_QUERY } from "../../queries/transactionsQuery";
-import { Container } from "semantic-ui-react";
 import TransactionForm from "../../components/transactionForm";
 import TransactionTable from "../../components/transactionTable/TransactionTable";
 import { Query } from "react-apollo";

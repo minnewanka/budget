@@ -10,22 +10,30 @@ const Routes = () => {
   return (
     <Router>
       <Container>
-        <Grid>
-          <Grid.Column width={3}>
-            <AppMenu />
-          </Grid.Column>
-          <Grid.Column width={13}>
-            <Switch>
-              <Route exact path="/" component={Login} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/transactions" component={Transactions} />
-              <Route exact path="/dashboard" component={Dashboard} />
-            </Switch>
-          </Grid.Column>
-        </Grid>
+        <Switch>
+          <Route exact path="/" component={Login} />
+          <Route exact path="/login" component={Login} />
+          <Route component={MenuRoutes} />
+        </Switch>
       </Container>
     </Router>
   );
 };
+
+const MenuRoutes = props => (
+  <>
+    <Grid>
+      <Grid.Column width={3}>
+        <AppMenu />
+      </Grid.Column>
+      <Grid.Column width={13}>
+        <Switch>
+          <Route exact path="/transactions" component={Transactions} />
+          <Route exact path="/dashboard" component={Dashboard} />
+        </Switch>
+      </Grid.Column>
+    </Grid>
+  </>
+);
 
 export default Routes;
